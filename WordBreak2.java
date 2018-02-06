@@ -15,16 +15,14 @@ class Solution {
             return splited.get(s);
         }
         List<String> s_split = new ArrayList<>();
-        for(int i = 1; i <= s.length(); i++){
-            String s1 = s.substring(0, i);
-            String s2 = s.substring(i);
-            if(dict.contains(s1)){
-                List<String> s2_split = splitStr(s2);
+        for(String word: dict){
+            if(s.startsWith(word)){
+                List<String> s2_split = splitStr(s.substring(word.length));
                 for(String str : s2_split){
                     if(str == ""){
-                        s_split.add(s1);
+                        s_split.add(word);
                     }else{
-                        s_split.add(s1+" "+str);
+                        s_split.add(word+ " " + str);
                     }
                 }
             }
