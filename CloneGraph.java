@@ -39,3 +39,27 @@ public class Solution {
     }
 }
 
+/**
+ * DFS version
+ */
+public class Solution {
+    HashMap<Integer, UndirectedGraphNode> vis = new HashMap<>();
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        return dfs(node);
+    }
+    
+    UndirectedGraphNode dfs(UndirectedGraphNode curr){
+        if(curr == null){
+            return null;
+        }
+        if(vis.containsKey(curr.label)){
+            return vis.get(curr.label);
+        }
+        UndirectedGraphNode temp = new UndirectedGraphNode(curr.label);
+        vis.put(curr.label, temp);
+        for(UndirectedGraphNode neighbor : curr.neighbors){
+            temp.neighbors.add(dfs(neighbor));
+        }
+        return temp;
+    }
+}
