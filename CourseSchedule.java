@@ -16,8 +16,8 @@ class Solution {
         for(int i = 0; i < len; i++){
             int u = prerequisites[i][0];
             int v = prerequisites[i][1];
-            vertexs[u].neighbours.add(v);
-            vertexs[v].degree++;
+            vertexs[v].neighbours.add(u);
+            vertexs[u].degree++;
         }
         Queue<Vertex> qv = new ArrayDeque<>();
         for(int i = 0; i < vertexs.length; i++){
