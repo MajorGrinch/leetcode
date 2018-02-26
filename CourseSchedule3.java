@@ -25,3 +25,25 @@ class Solution {
         return count;
     }
 }
+/**
+ * priority queue
+ */
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        int currTime = 0, count = 0;
+        Arrays.sort(courses, (a, b) -> a[1]-b[1] );
+        PriorityQueue<Integer> pqc = new PriorityQueue<>((a,b) -> b-a);
+        for(int[] course : courses){
+            if(currTime + course[0] <= course[1]){
+                currTime += course[0];
+                pqc.offer(course[0]);
+            }else{
+                if(!pqc.isEmpty() && pqc.peek() > course[0]){
+                    currTime += course[0] - pqc.poll();
+                    pqc.offer(course[0]);
+                }
+            }
+        }
+        return pqc.size();
+    }
+}
