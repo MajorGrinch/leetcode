@@ -9,30 +9,53 @@ class Solution {
     List<List<Integer>> ans;
     public List<List<Integer>> subsets(int[] nums) {
         // write your code here
-        ans = new LinkedList<>();
-        Arrays.sort(nums);
+        ans = new ArrayList<>();
         for(int depth = 0; depth <= nums.length; depth++){
-            dfs(nums, 0, depth, new LinkedList<>());
+            dfs1(nums, 0, depth, new ArrayList<>());
         }
         return ans; 
     }
-    void dfs(int[] nums, int k, int max_depth, LinkedList<Integer> subset){
-        if(k == max_depth){
-            ans.add(new LinkedList<>(subset));
+    /*
+    DFS with fixed depth
+    */
+    void dfs1(int[] nums, int k, int max_depth, ArrayList<Integer> subset){
+        if(max_depth == 0){
+            ans.add(new ArrayList<>(subset));
             return;
         }
         for(int i = k; i < nums.length; i++){
             subset.add(nums[i]);
-            dfs(nums, i+1, max_depth, subset);
-            subset.removeLast();
+            dfs1(nums, i+1, max_depth-1, subset);
+            subset.remove(subset.size()-1);
         }
+    }
+    /*
+    essentially this is a DP approach
+    the subset of f(n) is the the subset of f(n-1) adding
+    each element of subset of f(n-1) union with n
+    中文乱码
+    */
+    public List<List<Integer>> iterativeApproach(int[] nums){
+        ans = new ArrayList<>();
+        // Arrays.sort(nums);
+        ans.add(new ArrayList<>());
+        for(int i = 0; i < nums.length; i++){
+            int curr_size = ans.size();
+            // System.out.println("");
+            for(int j = 0; j < curr_size; j++){
+                ArrayList<Integer> temp = new ArrayList<>(ans.get(j));
+                temp.add(nums[i]);
+                ans.add(temp);
+            }
+        }
+        return ans;
     }
 }
 
 public class Subsets{
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] nums = {4,1,0};
+        int[] nums = {1,2,3,4};
         List<List<Integer>> ans = solution.subsets(nums);
         for(List<Integer> l : ans){
             System.out.println(l);
