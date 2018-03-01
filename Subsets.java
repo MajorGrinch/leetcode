@@ -10,9 +10,10 @@ class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         // write your code here
         ans = new ArrayList<>();
-        for(int depth = 0; depth <= nums.length; depth++){
-            dfs1(nums, 0, depth, new ArrayList<>());
-        }
+        // for(int depth = 0; depth <= nums.length; depth++){
+        //     dfs1(nums, 0, depth, new ArrayList<>());
+        // }
+        dfs2(nums, 0, new ArrayList<Integer>());
         return ans; 
     }
     /*
@@ -33,7 +34,6 @@ class Solution {
     essentially this is a DP approach
     the subset of f(n) is the the subset of f(n-1) adding
     each element of subset of f(n-1) union with n
-    中文乱码
     */
     public List<List<Integer>> iterativeApproach(int[] nums){
         ans = new ArrayList<>();
@@ -49,6 +49,17 @@ class Solution {
             }
         }
         return ans;
+    }
+    /**
+     * another dfs approach
+     */
+    void dfs2(int[] nums, int start, List<Integer> subset){
+        ans.add(new ArrayList<>(subset));
+        for(int i = start; i < nums.length; i++){
+            subset.add(nums[i]);
+            dfs2(nums, i+1, subset);
+            subset.remove(subset.size()-1);
+        }
     }
 }
 
