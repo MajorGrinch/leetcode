@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.*;
 
 /**
@@ -8,7 +7,7 @@ class Solution {
     public List<List<String>> findLadders(String start, String end, List<String> worddict) {
         List<List<String>> ans = new ArrayList<>();
         HashSet<String> dict = new HashSet<>(worddict);
-        if(!dict.contains(end)){
+        if (!dict.contains(end)) {
             return ans;
         }
         dict.remove(start);
@@ -46,7 +45,7 @@ class Solution {
                         if (dict.contains(child)) {
                             qn.offer(child);
                             dict.remove(child);
-                            costs.put(child, steps+1);
+                            costs.put(child, steps + 1);
                             HashSet<String> parent = new HashSet<>();
                             parent.add(curr_str);
                             parents.put(child, parent);
@@ -63,6 +62,7 @@ class Solution {
         }
         return ans;
     }
+
     void getPath(String curr, String end, HashMap<String, HashSet<String>> parents, LinkedList<String> path,
             List<List<String>> ans) {
         if (curr.equals(end)) {
@@ -77,13 +77,87 @@ class Solution {
     }
 }
 
+/**
+ * BFS version 2
+ */
+class Solution2 {
+    public List<List<String>> findLadders(String start, String end, List<String> worddict) {
+        List<List<String>> ans = new ArrayList<>();
+        HashSet<String> dict = new HashSet<>(worddict);
+        if (!dict.contains(end)) {
+            return ans;
+        }
+        dict.remove(start);
+        dict.remove(end);
+        HashSet<String> curr_level = new HashSet<>();
+        HashSet<String> next_level = new HashSet<>();
+        HashMap<String, HashSet<String>> childrenMap = new HashMap<>();
+        int wordL = start.length();
+        boolean found = false;
+        curr_level.add(start);
+        while (!curr_level.isEmpty() && !found) {
+            dict.removeAll(curr_level);
+            for (String curr_str : curr_level) {
+                char[] sc = curr_str.toCharArray();
+                childrenMap.put(curr_str, new HashSet<String>());
+                for (int i = 0; i < wordL; i++) {
+                    char ch = sc[i];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (c == ch)
+                            continue;
+                        sc[i] = c;
+                        String child = new String(sc);
+                        if(child.equals(end)){
+                            childrenMap.get(curr_str).add(end);
+                            found = true;
+                        }else if(dict.contains(child) && !found){
+                            next_level.add(child);
+                            childrenMap.get(curr_str).add(child);
+                        }
+                    }
+                    sc[i] = ch;
+                }
+            }
+            curr_level.clear();
+            HashSet<String> temp = curr_level;
+            curr_level = next_level;
+            next_level = temp;
+        }
+        for(String key : childrenMap.keySet()){
+            System.err.println(key + ": " + childrenMap.get(key));
+        }
+        if(found){
+            LinkedList<String> path = new LinkedList<>();
+            path.add(start);
+            getPath(start, end, childrenMap, path, ans);
+        }
+        return ans;
+    }
+    void getPath(String curr, String end, 
+                HashMap<String, HashSet<String>> childrenMap, LinkedList<String> path, 
+                List<List<String>> ans){
+        if(curr == end){
+            ans.add(new ArrayList<String>(path));
+            return;
+        }
+        if(!childrenMap.containsKey(curr)){
+            return;
+        }
+        for(String str : childrenMap.get(curr)){
+            path.add(str);
+            getPath(str, end, childrenMap, path, ans);
+            path.removeLast();
+        }
+    }
+}
+
 public class WordLadder2 {
     public static void main(String[] args) {
-        String[] input_array = {"ted","tex","red","tax","tad","den","rex","pee"};
-        // String[] input_array = {"a", "b", "c"};
-        Solution solution = new Solution();
-        List<List<String>> ans = solution.findLadders("red", "tax", Arrays.asList(input_array));
-        for(List<String> l : ans){
+        // String[] input_array = { "ted", "tex", "red", "tax", "tad", "den", "rex", "pee" };
+        String[] input_array = {"a", "b", "c", "d"};
+        Solution2 solution = new Solution2();
+        List<List<String>> ans = solution.findLadders("a", "d", Arrays.asList(input_array));
+        for (List<String> l : ans) {
             System.err.println(l);
         }
     }
