@@ -21,12 +21,39 @@ class Solution {
             }            
         }
     }
+    public List<String> generateAbbreviations2(String word) {
+        ans = new ArrayList<>();
+        for(int i = 0; i < (1<<word.length()); i++){
+            parseBinary(word, i);
+        } 
+        return ans;
+    }
+    void parseBinary(String word, int x){
+        StringBuilder sb = new StringBuilder();
+        int k = 0;
+        for(int i = 0; i < word.length(); i++){
+            if((x & 1) == 0){
+               // keep char
+                if(k != 0){
+                    sb.append(k);
+                    k = 0;
+                }
+                sb.append(word.charAt(i));
+            }else{
+                k++;
+            }
+            x = x >> 1;
+        }
+        if(k != 0)
+            sb.append(k);
+        ans.add(sb.toString());
+    }
 }
 
 public class GeneralizedAbbreviation{
     public static void main(String[] args) {
         String word = "word";
-        List<String> ans = new Solution().generateAbbreviations(word);
+        List<String> ans = new Solution().generateAbbreviations2(word);
         for(String str: ans){
             System.out.println(str);
         }
