@@ -36,3 +36,9 @@ class Solution {
         return i == len;
     }
 }
+public class ValidNumber{
+    public static void main(String[] args) {
+        String input = "514.e10";
+        System.out.println(new Solution().isNumber(input));
+    }
+}
