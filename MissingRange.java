@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
@@ -24,21 +25,21 @@ class Solution {
         }
         ans.add(st + "->" + ed);
     }
-}
-class Solution2{
-    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
-        long prev = (long)lower - 1;
+
+    public List<String> findMissingRanges2(int[] nums, int lower, int upper){
         List<String> ans = new ArrayList<>();
+        long prev = (long)lower - 1;
         for(int i = 0; i <= nums.length; i++){
             long curr = (i==nums.length) ? (long)upper + 1 : nums[i];
             if(curr - prev >= 2){
-                ans.add(getRange(prev+1, curr-1));
+                ans.add(getRange(prev+1, curr - 1));
             }
             prev = curr;
         }
         return ans;
+
     }
     private String getRange(long st, long ed){
-        return (st==ed) ? String.valueOf(st) : st + "->" + ed;
+        return (st == ed) ? String.valueOf(st) : (st + "->" + ed);
     }
 }

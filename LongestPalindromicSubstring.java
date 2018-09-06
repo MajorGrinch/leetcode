@@ -1,5 +1,8 @@
 class Solution {
     public String longestPalindrome(String s) {
+        if(s.length() == 0){
+            return "";
+        }
         boolean[][] dp = getPalindromeDpArray(s);
         int len = s.length();
         for(int size = len; size > 0; size--){
