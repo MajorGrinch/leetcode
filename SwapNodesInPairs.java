@@ -15,6 +15,15 @@ class Solution {
         return res;
     }
 }
+class Solution2{
+    public ListNode swapPairs(ListNode head){
+        if(head == null || head.next == null) return head;
+        ListNode p2 = head.next;
+        head.next = swapPairs(p2.next);
+        p2.next = head;
+        return p2;
+    }
+}
 class ListNode {
     int val;
     ListNode next;
