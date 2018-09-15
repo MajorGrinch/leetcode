@@ -26,6 +26,20 @@ class ASolution{
     }
 }
 
+class Solution3{
+    public int singleNumber(int[] nums){
+        int ones = 0, twos = 0, threes = 0;
+        for(int num : nums){
+            twos |= ones & num;
+            ones ^= num;
+            threes = ones & twos;
+            ones &= ~threes;
+            twos &= ~threes;
+        }
+        return ones;
+    }
+}
+
 public class SingleNumber2{
     public static void main(String[] args) {
         int[] a = {2,7, 5,22,2, 5,5,2, 7,22,22, 8, 7};
