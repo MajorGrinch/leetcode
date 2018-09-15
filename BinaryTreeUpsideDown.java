@@ -43,3 +43,17 @@ class Solution2{
         return parent;
     }
 }
+
+class Solution3{
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        return bottomUp(root, null);
+    }
+
+    private TreeNode bottomUp(TreeNode curr, TreeNode parent){
+        if(curr == null) return parent;
+        TreeNode tmpRoot =  bottomUp(curr.left, curr);  //find the left most node as new root and return
+        curr.left = (parent==null) ? null : parent.right;
+        curr.right = parent;
+        return tmpRoot;
+    }
+}
