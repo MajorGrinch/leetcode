@@ -1,12 +1,10 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
 class Solution {
     TreeNode newRoot;
     public TreeNode upsideDownBinaryTree(TreeNode root) {
@@ -28,5 +26,20 @@ class Solution {
         curr.left.left = curr.right;
         curr.left = null;
         curr.right = null;
+    }
+}
+
+class Solution2{
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        TreeNode curr =root, parent = null, parent_right = null;
+        while(curr != null){
+            TreeNode ori_left = curr.left;
+            curr.left = parent_right;
+            parent_right = curr.right;
+            curr.right = parent;
+            parent = curr;
+            curr = ori_left;
+        }
+        return parent;
     }
 }
