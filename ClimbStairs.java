@@ -9,3 +9,16 @@ class Solution {
         return ans[n];
     }
 }
+
+class Solution2{
+    public int climbStairs(int n){
+        if(n < 2) return 1;
+        int l1 = 1, l2 = 1;
+        for(int i = 2; i <= n; i++){
+            int tmp = l2;
+            l2 += l1;
+            l1 = tmp;
+        }
+        return l2;
+    }
+}
