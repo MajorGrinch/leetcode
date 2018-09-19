@@ -47,3 +47,23 @@ class Solution {
         return true;   
     }
 }
+
+class Solution {
+    public boolean isValid(String s) {
+        HashMap<Character, Character> hmap = new HashMap<>(){
+            {
+                put(')', '(');
+                put('}', '{');
+                put(']', '[');
+            }
+        };
+        Stack<Character> stack = new Stack<>();
+        for(char c : s.toCharArray()){
+            if(c == '(' || c == '[' || c == '{')
+                stack.push(c);
+            else if(stack.isEmpty() || hmap.get(c) != stack.pop())
+                return false;
+        }
+        return stack.isEmpty();
+    }
+}
