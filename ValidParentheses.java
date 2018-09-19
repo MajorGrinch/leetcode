@@ -48,7 +48,7 @@ class Solution {
     }
 }
 
-class Solution {
+class Solution2 {
     public boolean isValid(String s) {
         HashMap<Character, Character> hmap = new HashMap<>(){
             {
@@ -65,5 +65,14 @@ class Solution {
                 return false;
         }
         return stack.isEmpty();
+    }
+}
+
+class Solution3{
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(char c : s.toCharArray()){
+            
+        }
     }
 }
