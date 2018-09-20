@@ -25,6 +25,20 @@ class Solution2{
     }
 }
 
+class Solution3{
+    public int searchInsert(int[] nums, int target){
+        int L = 0, R = nums.length - 1;
+        while(L < R){
+            int mid = L + (R-L)/2;
+            if(nums[mid] < target){
+                L = mid + 1;
+            }else{
+                R = mid;
+            }
+        }
+        return nums[L] < target ? L+1 : L;
+    }
+}
 public class SearchInsertPosition{
     public static void main(String[] args) {
         int[] test = {1,3,5,6};
