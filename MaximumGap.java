@@ -42,3 +42,19 @@ public class MaximumGap{
         System.out.println(new Solution().maximumGap(input));
     }   
 }
+
+/*
+    sometimes the cost of sort array is smaller than
+    request for new memory
+ */
+class Solution2{
+    public int maximumGap(int[] nums){
+        if(nums.lenght < 2) return 0;
+        Arrays.sort(nums);
+        int max_gap = 0;
+        for(int i = 1; i < nums.length; i++){
+            max_gap = Math.max(nums[i] - nums[i-1], max_gap);
+        }
+        return max_gap;
+    }
+}
