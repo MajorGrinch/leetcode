@@ -95,12 +95,19 @@ class Solution2{
 
     private void dfs(int d, int maxD){
         if(d == maxD){
-            ans.add(square);
+            ans.add(new ArrayList<>(square));
             return;
         }
         String prefix = "";
         for(int i = 0; i < d; i++)
             prefix += square.get(i).charAt(d);
+        List<String> candidates = hmap.get(prefix);
+        for(String candidate : candidates){
+            if(!checkPrefix(candidate, d, maxD)) continue;
+            square.add(candidate);
+            dfs(d+1, maxD);
+            square.remove(d);
+        }
     }
 
     public List<List<String>> wordSquares(String[] words) {
