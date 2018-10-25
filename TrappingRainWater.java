@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 class Solution {
     public int trap(int[] height) {
         int ans = 0;
@@ -32,6 +34,25 @@ class Solution2{
         }
         for(int i = 1; i <= len - 2; i++){
             ans += Math.min(maxl[i], maxr[i]) - height[i];
+        }
+        return ans;
+    }
+}
+
+class Solution3{
+    public int trap(int[] height){
+        int ans = 0;
+        Stack<Integer> st = new Stack<>();
+        int curr = 0;
+        while(curr < height.length){
+            while(!st.isEmpty() && height[st.peek()] < height[curr]){
+                int top = st.pop();
+                if(st.isEmpty()) break;
+                int dist = curr - st.peek() - 1;
+                int minheight = Math.min(height[curr], height[st.peek()]) - height[top];
+                ans += dist * minheight;
+            }
+            st.push(curr++);
         }
         return ans;
     }
