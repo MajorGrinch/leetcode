@@ -5,30 +5,24 @@ class Solution {
     public String minWindow(String s, String t) {
         int[] tmap = new int[256];
         int[] winmap = new int[256];
-        int[] auxtmap = new int[256];
         int remain = t.length();
         Set<Character> set = new HashSet<>();
         for(int i = 0; i < t.length(); i++){
             tmap[t.charAt(i)]++;
-            auxtmap[t.charAt(i)]++;
             set.add(t.charAt(i));
         }
         int l = 0;
         int r;
-        int tmp = remain;
         for(r = 0; r < s.length(); r++){
-            if(auxtmap[s.charAt(r)] > 0){
-                if(remain == tmp) l = r;
-                auxtmap[s.charAt(r)]--;
+            char c = s.charAt(r);
+            winmap[c]++;
+            if(set.contains(c) && winmap[c] <= tmap[c]){
                 remain--;
             }
-            winmap[s.charAt(r)]++;
             if(remain == 0) break;
         }
         if(r == s.length()) return "";
         String ans = s.substring(l, r+1);
-        // System.out.println("l = " + l + " r = " + r);
-        // printWinmap(winmap);
         while(r < s.length()){
             char c = s.charAt(l++);
             winmap[c]--;
@@ -41,8 +35,6 @@ class Solution {
             }else{
                 ans = (ans.length() > (r-l+1) ? s.substring(l, r+1) : ans);
             }
-            // printWinmap(winmap);
-            // System.out.println(ans + " " + s.substring(l, r+1));
         }
         return ans;
     }
@@ -58,7 +50,7 @@ class Solution {
 
 public class MinimumWindowSubstring{
     public static void main(String[] args) {
-        String s = "aa";
+        String s = "baa";
         String t = "aa";
         Solution sol = new Solution();
         System.out.println(sol.minWindow(s, t));
