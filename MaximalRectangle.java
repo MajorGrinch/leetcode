@@ -9,6 +9,11 @@ class Solution {
         int[] left = new int[n];
         int[] right = new int[n];
         int[] height = new int[n];
+        /*
+        left[j] means the leftmost index of consecutive '1's starts
+        from matrix[i][j] towards left.
+        The same for right and height array
+        */
         for(int i = 0; i < n; i++){
             left[i] = 0;
             right[i] = n;
