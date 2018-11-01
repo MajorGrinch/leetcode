@@ -5,7 +5,7 @@ class TreeNode {
     TreeNode(int x) { val = x; }
 }
 /*
-inorder traverse the binary tree and compare the node simultaneously
+preorder traverse the binary tree and compare the node simultaneously
  */
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
