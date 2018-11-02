@@ -32,3 +32,24 @@ class Solution {
         return leftSum + rightSum;
     }
 }
+
+class Solution2 {
+    public int maxProfit(int[] prices) {
+        if(prices.length <= 1) return 0;
+        int[] trend = new int[prices.length-1];
+        for(int i = 0; i < trend.length; i++){
+            trend[i] = prices[i+1] - prices[i];
+        }
+        int cumuPro = 0;
+        int ans = 0;
+        for(int i = 0; i < trend.length; i++){
+            cumuPro += trend[i];
+            if(cumuPro > 0){
+                ans = Math.max(ans, cumuPro);
+            }else{
+                cumuPro = 0;
+            }
+        }
+        return ans;
+    }
+}
