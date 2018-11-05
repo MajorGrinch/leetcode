@@ -63,6 +63,7 @@ class Solution2{
         return splitList(head);
     }
     private ListNode splitList(ListNode node){
+        // printList(node);
         if(node == null || node.next == null){
             return node;
         }
@@ -74,6 +75,34 @@ class Solution2{
         ListNode right = slow.next;
         slow.next = null;
         return mergeList(splitList(node), splitList(right));
+    }
+
+    private ListNode mergeList(ListNode l1, ListNode l2){
+        ListNode start, tmphead;
+        if(l2 == null || l1 == null){
+            return l1;
+        }
+        if(l1.val < l2.val){
+            start = l1;
+            l1 = l1.next;
+        }else{
+            start = l2;
+            l2 = l2.next;
+        }
+        tmphead = start;
+        while(l1 != null && l2 != null){
+            if(l1.val > l2.val){
+                tmphead.next = l2;
+                l2 = l2.next;
+                tmphead = tmphead.next;
+            }else{
+                tmphead.next = l1;
+                l1 = l1.next;
+                tmphead = tmphead.next;
+            }
+        }
+        tmphead.next = (l1 == null ? l2 : l1);
+        return start;
     }
     void printList(ListNode head){
         while(head != null){
