@@ -57,3 +57,28 @@ class Solution {
         return tmphead;
     }
 }
+
+class Solution2{
+    public ListNode sortList(ListNode head) {
+        return splitList(head);
+    }
+    private ListNode splitList(ListNode node){
+        if(node == null || node.next == null){
+            return node;
+        }
+        ListNode slow = node, fast = node.next.next;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode right = slow.next;
+        slow.next = null;
+        return mergeList(splitList(node), splitList(right));
+    }
+    void printList(ListNode head){
+        while(head != null){
+            System.out.print(head.val + "->");
+        }
+        System.out.println("null");
+    }
+}
