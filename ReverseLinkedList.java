@@ -18,3 +18,19 @@ class Solution {
         return curr;
     }
 }
+
+class Solution2{
+    public ListNode reverseList(ListNode head){
+        if(head == null){
+            return head;
+        }
+        ListNode curr = null, prev = null;
+        while(head != null){
+            curr = head;
+            head = head.next;
+            curr.next = prev;
+            prev = curr;
+        }
+        return curr;
+    }
+}
