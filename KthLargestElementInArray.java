@@ -74,6 +74,7 @@ class Solution2{
         if(j >= k){
             partition(nums, lo, j, k);
         }
+        //if k lies between j and i then it's already in the right place
         return nums[k];
     }
 }
