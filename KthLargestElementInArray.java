@@ -53,28 +53,26 @@ class Solution2{
     }
     private int partition(int[] nums, int lo, int hi, int k) {
         if(lo >= hi){
-            return nums[lo];
+            return nums[k];
         }
-        int i = lo, j = hi + 1;
-        int v = nums[lo];
-        while (true) {
-            while (nums[++i] < v) {
-                if (i == hi)
-                    break;
+        int i = lo, j = hi;
+        int pvt = nums[lo + (hi-lo)/2];
+        while(i <= j){
+            while(i <= j && nums[i] < pvt){
+                i++;
             }
-            while (nums[--j] > v) {
-                if (j == lo)
-                    break;
+            while(i <= j && nums[j] > pvt){
+                j--;
             }
-            if (i >= j)
-                break;
-            exch(nums, i, j);
+            if(i <= j){
+                exch(nums, i++, j--);
+            }
         }
-        exch(nums, lo, j);
-        if(j < k){
-            partition(nums, j+1, hi, k);
-        }else if(j > k){
-            partition(nums, lo, j-1, k);
+        if(i <= k){
+            partition(nums, i, hi, k);
+        }
+        if(j >= k){
+            partition(nums, lo, j, k);
         }
         return nums[k];
     }
