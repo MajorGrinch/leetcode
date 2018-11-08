@@ -52,9 +52,26 @@ class Solution {
     }
 }
 
+class Solution2{
+    public int numSquares(int n){
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        for(int i = 1; i <= n; i++){
+            int minPrev = Integer.MAX_VALUE;
+            int j = 1;
+            while(i - j*j >= 0){
+                minPrev = Math.min(dp[i-j*j], minPrev);
+                j++;
+            }
+            dp[i] = minPrev + 1;
+        }
+        return dp[n];
+    }
+}
+
 public class PerfectSquares{
     public static void main(String[] args) {
-        Solution s = new Solution();
+        Solution2 s = new Solution2();
         System.out.println(s.numSquares(99));
     }
 }
