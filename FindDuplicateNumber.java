@@ -12,6 +12,24 @@ class Solution {
     }
 }
 
+class Solution2{
+    public int findDuplicate(int[] nums){
+        int tortoise = nums[0];
+        int hare = nums[nums[0]];
+        while(tortoise != hare){
+            tortoise = nums[tortoise];
+            hare = nums[nums[hare]];
+        }
+        int ptr1 = nums[0];
+        int ptr2 = nums[tortoise];
+        while(ptr1 != ptr2){
+            ptr1 = nums[ptr1];
+            ptr2 = nums[ptr2];
+        }
+        return ptr1;
+    }
+}
+
 public class FindDuplicateNumber{
     public static void main(String[] args) {
         int[] nums = {1,2,3,3,4};
