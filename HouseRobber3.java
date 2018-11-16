@@ -33,3 +33,25 @@ class Solution2{
         return res;
     }
 }
+
+class Solution3{
+    public int rob(TreeNode root){
+        int[] ans = robSub(root);
+        return Math.max(ans[0], ans[1]);
+    }
+    /**
+     * left[0] means max profit by not rob left child
+     * left[1] vice versa
+     * and others are the same
+     */
+    private int[] robSub(TreeNode root){
+        if(root == null) return new int[]{0, 0};
+        int[] left = robSub(root.left);
+        int[] right = robSub(root.right);
+
+        int[] res = new int[2];
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        res[1] = left[0] + right[0] + root.val;
+        return res;
+    }
+}
