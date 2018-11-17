@@ -23,6 +23,36 @@ class Solution {
     }
 }
 
+/**
+ * start stores start time of event
+ * end stores end time of end
+ * sort them in a increasing order
+ */
+class Solution2{
+    public int minMeetingRooms(Interval[] intervals){
+        if(intervals.length == 0) return 0;
+        int[] start = new int[intervals.length];
+        int[] end = new int[intervals.length];
+        for(int i = 0; i < intervals.length; i++){
+            start[i] = intervals[i].start;
+            end[i] = intervals[i].end;
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        int stIdx = 0, edIdx = 0;
+        int usedRoom = 0;
+        while(stIdx < intervals.length){
+            if(start[stIdx] >= end[edIdx]){
+                usedRoom--;
+                edIdx++;
+            }
+            usedRoom++;
+            stIdx++;
+        }
+        return usedRoom;
+    }
+}
+
 public class MeetingRoom2{
     public static void main(String[] args) {
         
