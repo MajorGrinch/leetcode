@@ -1,5 +1,14 @@
 import java.util.Stack;
 
+/**
+ * tmp stores current string with []
+ * and you can think the whole string is with a extra
+ * super []
+ * a [] contains the pattern [a-z]*[0-9]*[[a-z]+]
+ * use a string stack to store all leading chars with a []
+ * when encounter a ']', pop a string from string stack and append
+ * repeated pattern to it as the tmp
+ */
 class Solution {
     public String decodeString(String s) {
         StringBuilder sb = new StringBuilder();
