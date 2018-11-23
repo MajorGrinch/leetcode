@@ -30,3 +30,28 @@ class Solution {
         return dp[dp.length-1][dp[0].length-1];
     }
 }
+
+class Solution {
+    public boolean canPartition(int[] nums) {
+        Map<Integer, Integer> cntMap = new HashMap<>();
+        int sum = 0;
+        for(int num: nums){
+            sum += num;
+            cntMap.put(num, cntMap.getOrDefault(num, 0)+1);
+        }
+        if(sum % 2 == 1){
+            return false;
+        }
+        int target = sum / 2;
+        boolean[] dp = new boolean[target+1];
+        dp[0] = true;
+        for(int num: nums){
+            for(int j = target; j > 0; j--){
+                if(j >= num){
+                    dp[j] = (dp[j] || dp[j-num]);
+                }
+            }
+        }
+        return dp[target];
+    }
+}
