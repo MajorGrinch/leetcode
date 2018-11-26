@@ -27,3 +27,23 @@ class Solution {
         return dp;
     }
 }
+
+class Solution2{
+    int ans;
+    public int countSubstrings(String s) {
+        ans = 0;
+        char[] sc = s.toCharArray();
+        for(int i = 0; i < s.length(); i++){
+            extendPalindrome(sc, i, i);
+            extendPalindrome(sc, i, i+1);
+        }
+        return ans;
+    }
+    private void extendPalindrome(char[] sc, int st, int ed){
+        while(st >= 0 && ed < sc.length && sc[st] == sc[ed]){
+            ans++;
+            st--;
+            ed++;
+        }
+    }
+}
