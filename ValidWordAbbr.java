@@ -5,7 +5,7 @@ class Solution {
             if(word.charAt(i) == abbr.charAt(j)){
                 i++;
                 j++;
-            }else if(abbr.charAt(j) > '0' && abbr.charAt(j) <= '9'){
+            }else if(Character.isDigit(abbr.charAt(j)) && abbr.charAt(j) != '0'){
                 int start = j;
                 while(j < abbr.length() && Character.isDigit(abbr.charAt(j))){
                     j++;
