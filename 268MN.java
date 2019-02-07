@@ -17,4 +17,14 @@ class Solution {
         }
         return ans;
     }
+
+    public int missingNumber2(int[] nums){
+        int sum = 0;
+        int n = nums.length;
+        for(int num : nums){
+            sum += num;
+        }
+        int all = (1+n) * n / 2;
+        return all - sum;
+    }
 }
