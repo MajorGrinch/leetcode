@@ -56,73 +56,65 @@ public class TSP{
     }
 }
 
-class Solution2{
-
+class Solution2 {
     public List<int[]> getSkyline(int[][] buildings) {
         if(buildings.length == 0 || buildings[0].length == 0) return new ArrayList<>();
 
-        int cnt = 0;
+        int numX = 0;
         int n = buildings.length;
-        int[] xaxis = new int[n << 1];
-        // System.out.println(Arrays.toString(heights));
-
-        List<int[]> ans = new ArrayList<>();
+        int[] xAxis = new int[n * 2];
         SortedSet<Integer> xSet = new TreeSet<>();
         for(int[] bld : buildings){
             xSet.add(bld[0]);
             xSet.add(bld[1]);
         }
-
         for(int x : xSet){
-            xaxis[cnt++] = x;
+            xAxis[numX++] = x;
         }
-        // System.out.println("cnt = " + cnt);
-        SegTree st = new SegTree(cnt, xaxis);
+        LazySegTree lst = new LazySegTree(numX, xAxis);
         for(int[] bld : buildings){
-            int l = lower_bound(xaxis, 0, cnt-1, bld[0]);
-            int r = lower_bound(xaxis, 0, cnt-1, bld[1]) - 1;
-            st.updateRange(l, r, bld[2]);
+            int l = lower_bound(xAxis, 0, numX-1, bld[0]);
+            int r = lower_bound(xAxis, 0, numX-1, bld[1])-1;
+            lst.updateRange(l, r, bld[2]);
         }
-        st.query(0, cnt-1, ans);
+        List<int[]> ans = new ArrayList<>();
+        lst.query(ans);
         return ans;
     }
 
     private int lower_bound(int[] h, int l, int r, int target){
         while(l < r){
-            int mid = l + (r-l)/2;
+            int mid = l + (r-l) / 2;
             if(h[mid] == target) return mid;
-            else if(h[mid] < target){
-                l = mid + 1;
-            }else{
-                r = mid;
-            }
+            else if(h[mid] > target) r = mid;
+            else l = mid + 1;
         }
         return l;
     }
 }
 
-class SegTree{
-    private int[] xaxis, height;
-    private int numx;
+class LazySegTree{
+    private int[] xAxis, heights;
+    private int numX;
     private int left(int root){ return root << 1;}
-    private int right(int root){ return (root<<1)+1;}
+    private int right(int root){ return (root << 1) + 1;};
 
     private void pushDown(int root){
-        if(height[root] > 0){
-            int h = height[root];
-            height[left(root)] = Math.max(height[root], height[left(root)]);
-            height[right(root)] = Math.max(height[root], height[right(root)]);
-            height[root] = 0;
+        if(heights[root] > 0){
+            int h = heights[root];
+            heights[left(root)] = Math.max(heights[left(root)], h);
+            heights[right(root)] = Math.max(heights[right(root)], h);
+            heights[root] = 0;
         }
     }
 
     private void updateRange(int root, int L, int R, int ust, int ued, int h){
-        if(height[root] >= h) return;
+        if(heights[root] >= h) return; // maintain the highest
 
         if(ust > R || ued < L) return;
 
         if(ust <= L && R <= ued){
-            height[root] = h;
+            heights[root] = h;
             return;
         }
         pushDown(root);
@@ -133,10 +125,8 @@ class SegTree{
 
     private void query(int root, int L, int R, List<int[]> ans){
         if(L == R){
-            if(!ans.isEmpty() && height[root] == ans.get(ans.size()-1)[1]){
-                return;
-            }
-            ans.add(new int[]{xaxis[L], height[root]});
+            if(!ans.isEmpty() && heights[root] == ans.get(ans.size()-1)[1]) return;
+            ans.add(new int[]{xAxis[L], heights[root]});
             return;
         }
         pushDown(root);
@@ -145,19 +135,17 @@ class SegTree{
         query(right(root), mid+1, R, ans);
     }
 
-    public void query(int L, int R, List<int[]> ans){
-        query(1, L, R, ans);
+    public void query(List<int[]> ans){
+        query(1, 0, numX-1, ans);
     }
 
     public void updateRange(int ust, int ued, int h){
-        updateRange(1, 0, numx-1, ust, ued, h);
+        updateRange(1, 0, numX-1, ust, ued, h);
     }
 
-    public SegTree(int _numx, int[] _xaxis){
-        numx = _numx;
-        xaxis = _xaxis;
-        height = new int[numx * 4];
-        System.out.println("height len = " + height.length);
+    public LazySegTree(int _numX, int[] _xAxis){
+        numX = _numX;
+        xAxis = _xAxis;
+        heights = new int[numX << 2];
     }
-
 }
