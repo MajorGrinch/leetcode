@@ -17,6 +17,7 @@ class Solution {
                     continue;
                 }
                 if(s.charAt(i-1) != ')'){
+                    // if no ) on the left, there must be a num
                     operandStack.push(currNum);
                 }
                 if(c == ')'){
