@@ -49,16 +49,36 @@ class Solution {
         return operandStack.peek();
         
     }
+}
 
-    private void printStack(Stack<Integer> operandStack, Stack<Character> operatorStack){
-        for(int num : operandStack){
-            System.out.printf("%d ", num);
+class Solution2{
+    public int calculate(String s){
+        return recurCal(0, s)[1];
+    }
+
+    private int[] recurCal(int start, String s){
+        int result = 0;
+        int num = 0;
+        boolean isPlus = true;
+        for(int i = start; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(c >= '0' && c <= '9'){
+                num = num * 10 + c - '0';
+            }else if(c == '+' || c == '-'){
+                result = isPlus ? result + num : result - num;
+                num = 0;
+                isPlus = (c == '+');
+            }else if(c == '('){
+                int[] ret = recurCal(i+1, s);
+                i = ret[0];
+                result = isPlus ? result + ret[1] : result - ret[1];
+            }else if(c == ')'){
+                result = isPlus ? result + num : result - num;
+                return new int[]{i, result};
+            }
         }
-        System.out.println();
-        for(char c : operatorStack){
-            System.out.printf("%c ", c);
-        }
-        System.out.println();
+        result = isPlus ? result + num : result - num;
+        return new int[]{s.length(), result};
     }
 }
 
