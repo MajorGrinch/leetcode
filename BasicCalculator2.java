@@ -122,12 +122,48 @@ class Solution {
         }
         return pri;
     }
+
+}
+
+class Solution2 {
+    public int calculate(String s) {
+        int acc_num = 0;
+        char lastSign = '+';
+        int ans = 0;
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(c >= '0' && c <= '9'){
+                int num = c - '0';
+                int j = i + 1;
+                while(j < s.length() && Character.isDigit(s.charAt(j))){
+                    num = num * 10 + s.charAt(j++) - '0';
+                }
+                i = j - 1;
+                if(lastSign == '+'){
+                    acc_num = num;
+                }else if(lastSign == '-'){
+                    acc_num = -num;
+                }else if(lastSign == '*'){
+                    acc_num *= num;
+                }else{
+                    acc_num /= num;
+                }
+            }else if(c != ' '){
+                if(c == '+' || c == '-'){
+                    ans += acc_num;
+                    acc_num = 0;
+                }
+                lastSign = c;
+            }
+        }
+        ans += acc_num;
+        return ans;
+    }
 }
 
 public class BasicCalculator2{
     public static void main(String[] args) {
-        // String input = "((3+2)*2+5 * (10-7))*5 +(3+9)*(1+1)";
-        String input = "282-1*2*13-30-2*2*2/2-95/5*2+55+804+3024";
-        System.out.println(new Solution().calculate(input));
+        // String input = "282-1*2*13-30-2*2*2/2-95/5*2+55+804+3024";
+        System.out.println(new Solution2().calculate(input));
     }
 }
