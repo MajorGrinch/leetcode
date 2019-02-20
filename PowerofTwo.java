@@ -17,6 +17,12 @@ class Solution2{
     }
 }
 
+class Solution3{
+    public boolean isPowerOfTwo(int n){
+        return n > 0 && 1073741824%n == 0;
+    }
+}
+
 public class PowerofTwo{
     public static void main(String[] args) {
         int n = 1073741825;
