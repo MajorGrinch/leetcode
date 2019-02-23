@@ -57,7 +57,7 @@ class SegTree{
     private int right(int p){ return (p<<1) + 1;}
 
     private void build(int p, int L, int R){
-        // System.out.printf("p = %d, L = %d, R = %d\n", p, L, R);
+        System.out.printf("p = %d, L = %d, R = %d\n", p, L, R);
         if(L == R){
             st[p] = 0;
         }else{
@@ -122,7 +122,7 @@ class Solution2 {
             minV = Math.min(minV, num);
             maxV = Math.max(maxV, num);
         }
-        SegTree segt = new SegTree(maxV-minV+1);
+        SegTree segt = new SegTree(maxV-minV+2);
         maxV -= minV-1;
         for(int i = 0; i < nums.length; i++){
             nums[i] -= minV-1;
