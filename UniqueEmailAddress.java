@@ -1,3 +1,4 @@
+import java.util.*;
 class Solution {
     public int numUniqueEmails(String[] emails) {
         Set<String> addrSet = new HashSet<>();
