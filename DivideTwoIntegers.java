@@ -17,6 +17,29 @@ class Solution {
         return (int)quotient;
     }
 }
+
+class Solution2{
+    public int divide(int dividend, int divisor){
+        if(dividend == Integer.MIN_VALUE && divisor == -1){
+            return Integer.MAX_VALUE;
+        }
+        long ldividend = dividend, ldivisor = divisor, quotient = 0;
+        ldividend = Math.abs(ldividend);
+        ldivisor = Math.abs(ldivisor);
+        int sign = (dividend > 0) ^ (divisor > 0) ? -1 : 1;
+        while(ldividend >= ldivisor){
+            long tmpDvs = ldivisor, cl = 0;
+            while(tmpDvs*2 < ldividend){
+                cl++;
+                tmpDvs <<= 1;
+            }
+            ldividend -= tmpDvs;
+            // System.out.println(cl);
+            quotient += (1<<cl);
+        }
+        return (int)(sign * quotient);
+    }
+}
 public class DivideTwoIntegers{
     public static void main(String[] args) {
         System.out.println(new Solution().divide(10, 3));
