@@ -242,9 +242,10 @@ class Solution3 {
 public class WordLadder2 {
     public static void main(String[] args) {
         // String[] input_array = { "ted", "tex", "red", "tax", "tad", "den", "rex", "pee" };
-        String[] input_array = { "a", "b", "c", "d"};
+        String[] input_array = {"hot","dot","dog","lot","log","cog"};
+        // String[] input_array = { "a", "b", "c", "d"};
         Solution3 solution = new Solution3();
-        List<List<String>> ans = solution.findLadders("a", "c", Arrays.asList(input_array));
+        List<List<String>> ans = solution.findLadders("hit", "cog", Arrays.asList(input_array));
         for (List<String> l : ans) {
             System.err.println(l);
         }
